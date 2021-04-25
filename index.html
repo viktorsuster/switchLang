@@ -4,33 +4,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Multiple Languages with Jquery</title>
+  <title>Switch lang</title>
   <link rel="stylesheet" href="style/style.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="script/script.js"></script>
 </head>
 <body>
+  
+  <!-- Menu -->
 
+<div class="menu">
   <nav class="nav-horizontal">
     <div class="mask">
       <ul class="list">
-        <li><img src="img/Mark.png"><a href="#" id="logo">workflow</li>
+        <a href="#" id="logo"><li><img class="img-logo" src="img/Mark.png">workflow</li></a>
         <a href="#"><li class="lang active" key="dashboard">Dashboard</li></a>
         <a href="#"><li class="lang" key="team">Team</li></a>
         <a href="#"><li class="lang" key="projects">Projects</li></a>
         <a href="#"><li class="lang" key="calendar">Calendar</li></a>
       </ul>
 
+  <!-- Language selector -->
 
-      <select id="mySelect">
-        <option value="en" class="translate">English</option>
-        <option value="sk" class="translate">Slovensky</option>
-        <option value="pl" class="translate">Poľsky</option>
-      </select>
+      <div id="mySelects" class="lang-menu">
+        <div class="selected-lang">
+           <img class="icon" src="img/Icon.png" alt="">
+        </div>
+
+        <ul>
+          <a href="#"><li class="event" id="en">
+              English
+          </li></a>
+          <a href=""><li class="event" id="sk">
+              Slovensky
+          </li></a>
+          <a href=""><li class="event" id="pl">
+              Poľsky
+          </li></a>
+      </ul>
+        
+    </div>
     </div>
   </nav>
+</div>
 
-  <p class="lang" key="desc">Hi!</p>
+<!-- Web content -->
+
+  <p class="lang" key="content">Hi!</p>
+
+<!-- Alternative lang selector -->
+
+  <select id="mySelect">
+    <option value="en" class="translate">English</option>
+    <option value="sk" class="translate">Slovensky</option>
+    <option value="pl" class="translate">Poľsky</option>
+  </select>
 
 </body>
 </html>
