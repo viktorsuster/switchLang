@@ -61,7 +61,8 @@ $(function () {
     var lang = $(this).attr('id');
     $('.lang').each(function (index, item) {
       // $(this).find('> li').text(arrLang[lang][$(this).attr('key')]);
-      $(this).find('> li').text(locales[lang][$(this).attr('key')]);
+      // $(this).find('> li').text(locales[lang][$(this).attr('key')]);
+      $(this).text(locales[lang][$(this).attr('key')]);
     });
   });
 });
