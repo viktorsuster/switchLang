@@ -29,27 +29,28 @@
 
 // Object option
 
+
 const locales = {
   en: {
     dashboard: 'Dashboard',
     team: 'Team',
     projects: 'Projects',
     calendar: 'Calendar',
-    content: 'Hello'
+    content: 'Hello: English language'
   },
   sk: {
     dashboard: 'Nástenka',
     team: 'Tím',
     projects: 'Projekty',
     calendar: 'Kalendár',
-    content: 'Čauko'
+    content:'Čauko: Slovenský jazyk',
   },
   pl: {
     dashboard: 'Deska rozdzielcza',
     team: 'Zespół',
     projects: 'Projektowanie',
     calendar: 'Kalendarz',
-    content: 'Csesc'
+    content: 'Csescs: Język polski'
   }
 }
 
