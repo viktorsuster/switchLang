@@ -1,83 +1,185 @@
-// Array option
+const config = {
+  locales: {
+    default: 'sk', // lang code: en/sk/pl
+    availableLocales: [
+      {
+        code: 'en',
+        label: 'English'
+      },
+      {
+        code: 'sk',
+        label: 'Slovak'
+      },
+      {
+        code: 'pl',
+        label: 'Polish'
+      }
+    ]
+  },
+  routes: [
+    {
+      name: 'dashboard',
+      label: 'Dashboard',
+      route: '/'
+    },
+    {
+      name: 'team',
+      label: 'Team',
+      route: '/#team'
+    },
+    {
+      name: 'projects',
+      label: 'Projects',
+      route: '/#projects'
+    },
+    {
+      name: 'calendar',
+      label: 'Calendar',
+      route: '/#calendar'
+    },
+    {
+      name: 'profile',
+      label: 'Profile',
+      route: '/#profile'
+    },
 
-// var arrLang = new Array();
-// arrLang['en'] = new Array();
-// arrLang['sk'] = new Array();
-// arrLang['pl'] = new Array();
-// arrLang['content'] = new Array();
-
-// // myContent EN
-// arrLang['en']['dashboard'] = 'Dashboard';
-// arrLang['en']['team'] = 'Team';
-// arrLang['en']['projects'] = 'Projects';
-// arrLang['en']['calendar'] = 'Calendar';
-// arrLang['en']['content'] = 'Hi!';
-
-// // myContent SK
-// arrLang['sk']['dashboard'] = 'Nástenka';
-// arrLang['sk']['team'] = 'Tím';
-// arrLang['sk']['projects'] = 'Projekty';
-// arrLang['sk']['calendar'] = 'Kalendár';
-// arrLang['sk']['content'] = 'Čauko';
-
-// // myContent PL
-// arrLang['pl']['dashboard'] = 'Deska rozdzielcza';
-// arrLang['pl']['team'] = 'Zespół';
-// arrLang['pl']['projects'] = 'Projektowanie';
-// arrLang['pl']['calendar'] = 'Kalendarz';
-// arrLang['pl']['content'] = 'Csesc';
-
-// Object option
-
+  ]
+}
 
 const locales = {
-  en: {
-    dashboard: 'Dashboard',
-    team: 'Team',
-    projects: 'Projects',
-    calendar: 'Calendar',
-    content: 'Hello: English language'
-  },
-  sk: {
-    dashboard: 'Nástenka',
-    team: 'Tím',
-    projects: 'Projekty',
-    calendar: 'Kalendár',
-    content:'Čauko: Slovenský jazyk',
-  },
-  pl: {
-    dashboard: 'Deska rozdzielcza',
-    team: 'Zespół',
-    projects: 'Projektowanie',
-    calendar: 'Kalendarz',
-    content: 'Csescs: Język polski'
+  en: [
+    {
+      source: 'Dashboard',
+      target: 'Dashboard'
+    },
+    {
+      source: 'Team',
+      target: 'Team'
+    },
+    {
+      source: 'Projects',
+      target: 'Projects'
+    },
+    {
+      source: 'Calendar',
+      target: 'Calendar'
+    },
+    {
+      source: 'Hello: English language',
+      target: 'Hello: English language'
+    }
+  ],
+  sk: [
+    {
+      source: 'Dashboard',
+      target: 'Nástenka'
+    },
+    {
+      source: 'Team',
+      target: 'Tím'
+    },
+    {
+      source: 'Projects',
+      target: 'Projekty'
+    },
+    {
+      source: 'Calendar',
+      target: 'Kalendár'
+    },
+    {
+      source: 'Hello: English language',
+      target: 'Čauko: Slovenský jazyk'
+    },
+    {
+      source: 'Profile',
+      target: 'Profil'
+    }
+  ],
+  pl: [
+    {
+      source: 'Dashboard',
+      target: 'Deska rozdzielcza'
+    },
+    {
+      source: 'Team',
+      target: 'Zespół'
+    },
+    {
+      source: 'Projects',
+      target: 'Projektowanie'
+    },
+    {
+      source: 'Calendar',
+      target: 'Kalendarz'
+    },
+    {
+      source: 'Hello: English language',
+      target: 'Csescs: Język polski'
+    }
+  ]
+}
+
+function _translate(source) {
+  var translations = locales[getLocale()],
+      translation = translations.find(t => t.source === source);
+  return !translation ? source : translation.target;
+}
+
+function setLocale(code) {
+  if(config.locales.availableLocales.find(locale => locale.code === code)) {
+    localStorage.setItem('locale', code);
+    return true
+  } else {
+    alert('This language is not supported'); // Todo: Translate
+    return false
   }
 }
 
+function getLocale() {
+  if(!localStorage.getItem('locale')) {
+    setLocale(config.locales.default);
+  }
+
+  return localStorage.getItem('locale');
+}
+
+function loadNavigation() {
+  var $navigationList = document.getElementById('nav-list');
+  config.routes.forEach(function (item) {
+    var $li = document.createElement('li'),
+        $a = document.createElement('a')
+    $a.setAttribute('href', item.route)
+    $a.innerText = _translate(item.label);
+    $li.append($a);
+    $navigationList.append($li);
+  })
+}
+
+function loadLanguageSwitcher() {
+  var $languageSwitcher = document.getElementById('lang-switcher');
+  config.locales.availableLocales.forEach(function (item) {
+    var $li = document.createElement('li'),
+        $a = document.createElement('a')
+    $a.innerText = _translate(item.label);
+    $li.append($a);
+    $li.setAttribute('class', 'event');
+    $li.addEventListener('click', () => listenerSwitchLanguage(item.code))
+    $languageSwitcher.append($li);
+  })
+}
+
+function listenerSwitchLanguage(code) {
+  if(setLocale(code)) {
+    location.reload();
+  }
+}
+
+function init() {
+  loadNavigation();
+  loadLanguageSwitcher();
+}
+
 // Process translation
-
 $(function () {
-  $('.event').click(function (e) {
-    e.preventDefault()
-    var lang = $(this).attr('id');
-    $('.lang').each(function (index, item) {
-      // $(this).find('> li').text(arrLang[lang][$(this).attr('key')]);
-      // $(this).find('> li').text(locales[lang][$(this).attr('key')]);
-      $(this).text(locales[lang][$(this).attr('key')]);
-    });
-  });
+  init();
 });
-
-
-// Select option
-
-// $(function () {
-//   $('#mySelect').on('change', function () {
-//     var lang = $(this).val();
-
-
-//     $('.lang').each(function (index, item) {
-//       $(this).text(arrLang[lang][$(this).attr('key')]);
-//     });
-//   });
-// });
